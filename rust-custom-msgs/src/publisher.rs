@@ -8,7 +8,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut node = r2r::Node::create(ctx, "num_publisher", "")?;
 
     // 퍼블리셔 생성
-    let publisher = node.create_publisher::<Num>("/num", r2r::QosProfile::default())?;
+    let publisher = node.create_publisher::<Num>("topic", r2r::QosProfile::default())?;
 
     let mut count = 0;
 
@@ -19,7 +19,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         publisher.publish(&msg)?; // &msg로 참조를 전달
 
         // 1초 대기
-        tokio::time::sleep(Duration::from_secs(1)).await;
+        tokio::time::sleep(Duration::from_millis(500)).await;
         count += 1;
     }
 }
